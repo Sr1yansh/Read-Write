@@ -9,6 +9,9 @@ const passport = require('passport');
 // Load User Model
 require('./models/User');
 
+//Load Story Model
+require('./models/Story');
+
 // Passport Config
 require('./config/passport')(passport);
 
