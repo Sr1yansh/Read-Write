@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -34,6 +35,9 @@ mongoose.connect(keys.mongoURI, {
 
 const app = express();
 
+// Body-Parser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 // Handlebars Middleware
 app.engine('handlebars', exphbs({
   defaultLayout:'main'
