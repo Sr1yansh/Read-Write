@@ -7,16 +7,34 @@ const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 
 // Stories Index
 router.get('/', (req, res) => {
-  res.render('stories/index');
+  Story.findOne({status: 'public'})
+    .populate('user')
+    .then(stories => {
+      res.render('stories/index',{
+        stories : stories
+      });
+    });  
 });
 
+// Show Single Story
+router.get('/show/:id', (req,res) => {
+  Story.findOne({
+    _id : req.params.id
+  }) 
+  .populate('user')
+  .then(story => {
+    res.render('/stories/show', {
+      story : story
+    })
+  })
+})
 // Add Story Form
 router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('stories/add');
 });
 
 // Process Add Story
-router.get('/', (req,res) => {
+router.post('/', (req,res) => {
   let allowComments;
   if(req.body.allowComments){
     allowComments = true

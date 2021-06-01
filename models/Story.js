@@ -45,4 +45,4 @@ const StorySchema = new Schema({
 });
 
 // Create collection and add schema
-mongoose.model('stories', StorySchema, 'stories'); // Third parameter create ktun kia?
+mongoose.model('stories', StorySchema, 'stories'); // Third parameter create kyun kia?

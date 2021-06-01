@@ -24,11 +24,20 @@ const stories = require('./routes/stories');
 // Load Keys
 const keys = require('./config/keys');
 
+// Handlebars Helpers
+const {
+  truncate,
+  stripTags,
+  formatDate
+} = require('./helpers/hbs');
+
 // Map global promises
 mongoose.Promise = global.Promise;
 // Mongoose Connect
 mongoose.connect(keys.mongoURI, {
-  useMongoClient:true
+  //useMongoClient:true,
+  useUnifiedTopology: true,
+  //useNewUrlParser: true
 })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
@@ -38,8 +47,14 @@ const app = express();
 // Body-Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 // Handlebars Middleware
 app.engine('handlebars', exphbs({
+  helpers: {
+    truncate : truncate,
+    stripTags : stripTags,
+    formatDate : formatDate
+  },
   defaultLayout:'main'
 }));
 app.set('view engine', 'handlebars');
