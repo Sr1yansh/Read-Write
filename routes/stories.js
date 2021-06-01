@@ -28,10 +28,23 @@ router.get('/show/:id', (req,res) => {
     })
   })
 })
+
 // Add Story Form
 router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('stories/add');
 });
+
+// Edit Story Form
+router.get('/edit/:id', (req,res) => {
+  Story.findOne({
+    _id : req.params.id
+  }) 
+  .then(story => {
+    res.render('/stories/edit', {
+      story : story
+    })
+  })
+})
 
 // Process Add Story
 router.post('/', (req,res) => {
